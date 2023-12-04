@@ -9,23 +9,28 @@ import SwiftUI
 
 @main
 struct InstructionManualApp: App {
-//    @State private var model = AreaViewModel()
+    @ObservedObject private var model = AreaViewModel()
     var body: some Scene {
-        WindowGroup {
+        WindowGroup(id: model.mainAreaId) {
             ContentView()
         }
         
-        WindowGroup(id: "ShelfRealityArea") {
+        WindowGroup(id: model.shelfRealityAreaId) {
             ShelfRealityArea()
         }
         .defaultSize(CGSize(width: 800, height: 1000))
         
-        WindowGroup(id: "EquipmentRealityArea") {
+        WindowGroup(id: model.equipmentRealityAreaId) {
             EquipmentRealityArea()
         }
-        .defaultSize(CGSize(width: 800, height: 800))
+        .defaultSize(CGSize(width: 700, height: 700))
         
-        ImmersiveSpace(id: "ImmersiveSpace") {
+        WindowGroup(id: model.videoAreaId) {
+            VideoArea(videoSourcePath: "ScrewDetail")
+        }
+        .defaultSize(CGSize(width: 700, height: 700))
+        
+        ImmersiveSpace(id: model.immersiveAreaId) {
             ImmersiveView()
         }.immersionStyle(selection: .constant(.full), in: .full)
     }

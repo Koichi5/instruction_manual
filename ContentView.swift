@@ -10,18 +10,20 @@ import RealityKit
 import RealityKitContent
 
 struct ContentView: View {
-//    @Environment(AreaViewModel.self) private var model
+    @ObservedObject private var model = AreaViewModel()
     @Environment(\.openWindow) private var openWindow
+    @Environment(\.dismissWindow) private var dismissWindow
     
     var body: some View {
         VStack {
             Button(action: {
-                openWindow(id: "ShelfRealityArea")
+                openWindow(id: model.shelfRealityAreaId)
             }) {
                 Text("Open Shelf Scene")
             }
             Button(action: {
-                openWindow(id: "EquipmentRealityArea")
+                openWindow(id: model.equipmentRealityAreaId)
+                dismissWindow(id: model.mainAreaId)
             }) {
                 Text("Open Equipment Scene")
             }

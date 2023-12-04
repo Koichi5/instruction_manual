@@ -10,6 +10,9 @@ import RealityKit
 import RealityKitContent
 
 struct EquipmentRealityArea: View {
+    @Environment(\.openWindow) private var openWindow
+    @Environment(\.dismissWindow) private var dismissWindow
+    @ObservedObject private var model = AreaViewModel()
     let attachmentID = "attachmentID"
     var body: some View {
         RealityView { content, attachments in
@@ -19,7 +22,7 @@ struct EquipmentRealityArea: View {
             content.add(entity)
             
             if let sceneAttachment = attachments.entity(for: attachmentID) {
-                sceneAttachment.position = SIMD3<Float>(0, -0.2, 0.9)
+                sceneAttachment.position = SIMD3<Float>(0, -0.1, 0.15)
                 sceneAttachment.transform.rotation = simd_quatf(angle: -0.5, axis: SIMD3<Float>(1,0,0))
                 content.add(sceneAttachment)
             }
@@ -31,10 +34,15 @@ struct EquipmentRealityArea: View {
                 .controlSize(.large)
         } attachments: {
             Attachment(id: attachmentID) {
-                Button(action: {}) {
-                    Text("Attachment")
+                Button(action: {
+                    openWindow(id: model.mainAreaId)
+                }) {
+                    Text("Close")
                 }
             }
+        }
+        .onAppear {
+            dismissWindow(id: model.mainAreaId)
         }
     }
 }

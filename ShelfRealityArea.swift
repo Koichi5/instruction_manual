@@ -10,11 +10,14 @@ import RealityKit
 import RealityKitContent
 
 struct ShelfRealityArea: View {
-    let attachmentID = "attachmentID"
+    @Environment(\.openWindow) private var openWindow
+    @Environment(\.dismissWindow) private var dismissWindow
+    @ObservedObject private var model = AreaViewModel()
     @State private var animationPlayer: AnimationPlaybackController?
     @State private var currentAnimationTime: TimeInterval = 0.0
     @State private var currentStepIndex = 0 // 現在のステップインデックス
-    let stepDurations: [TimeInterval] = [3.3, 3.33, 4.0, 3.75] // 各ステップのアニメーション時間
+    let attachmentID = "attachmentID"
+    let stepDurations: [TimeInterval] = [3.3, 3.1, 4.3, 3.6] // 各ステップのアニメーション時間
     // 各ステップの説明文
     let stepDescriptions = [
         "Step 1: First part of the instruction.",
@@ -58,11 +61,20 @@ struct ShelfRealityArea: View {
                             currentStepIndex += 1
                         }
                         playAnimation(for: stepDurations[currentStepIndex])
+                        if currentStepIndex == 2 {
+                            openWindow(id: model.videoAreaId)
+                        } else if currentStepIndex == 3 {
+                            dismissWindow(id: model.videoAreaId)
+                        }
                     }) {
                         Text("Next Step")
                     }
+                    
                 }
             }
+        }
+        .onAppear {
+            dismissWindow(id: model.mainAreaId)
         }
     }
     private func playAnimation(for duration: TimeInterval) {
