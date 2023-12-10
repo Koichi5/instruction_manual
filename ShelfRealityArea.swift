@@ -55,17 +55,22 @@ struct ShelfRealityArea: View {
             Attachment(id: attachmentID){
                 VStack {
                     Text(stepDescriptions[currentStepIndex]) // 現在のステップの説明文を表示
+                    if currentStepIndex == 2 {
+                        Button(action: {
+                            openWindow(id: model.videoAreaId)
+                        }) {
+                            Text("Show Detail")
+                        }
+                        .onDisappear {
+                            dismissWindow(id: model.videoAreaId)
+                        }
+                    }
                     Button(action: {
                         // 次のステップに移動
                         if currentStepIndex < stepDurations.count - 1 {
                             currentStepIndex += 1
                         }
                         playAnimation(for: stepDurations[currentStepIndex])
-                        if currentStepIndex == 2 {
-                            openWindow(id: model.videoAreaId)
-                        } else if currentStepIndex == 3 {
-                            dismissWindow(id: model.videoAreaId)
-                        }
                     }) {
                         Text("Next Step")
                     }
