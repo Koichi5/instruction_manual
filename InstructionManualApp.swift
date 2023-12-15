@@ -30,6 +30,11 @@ struct InstructionManualApp: App {
         }
         .defaultSize(CGSize(width: 700, height: 700))
         
+        WindowGroup(id: model.completedAreaId) {
+            CompletedRealityArea()
+        }
+        .defaultSize(CGSize(width: 800, height: 900))
+        
         ImmersiveSpace(id: model.immersiveAreaId) {
             ImmersiveView()
         }.immersionStyle(selection: .constant(.full), in: .full)

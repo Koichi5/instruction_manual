@@ -13,4 +13,5 @@ class AreaViewModel: ObservableObject {
     @Published var equipmentRealityAreaId: String = "EquipmentRealityArea"
     @Published var videoAreaId: String = "VideoArea"
     @Published var immersiveAreaId: String = "ImmersiveSpace"
+    @Published var completedAreaId: String = "CompletedArea"
 }

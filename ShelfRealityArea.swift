@@ -30,6 +30,15 @@ struct ShelfRealityArea: View {
             guard let entity = try? await Entity(named: "ShelfScene", in: realityKitContentBundle) else {
                 fatalError("Unable to load scene model")
             }
+            guard let env = try? await EnvironmentResource(named: "Directional")
+            else { return }
+            
+            let iblComponent = ImageBasedLightComponent(source: .single(env),
+                                                        intensityExponent: 10.0)
+
+            entity.components[ImageBasedLightComponent.self] = iblComponent
+            entity.components.set(ImageBasedLightReceiverComponent(imageBasedLight: entity))
+            
             let animation = entity.availableAnimations[0]
             let player = entity.playAnimation(animation.repeat(duration: .infinity), transitionDuration: 0.25, startsPaused: true)
             self.animationPlayer = player
@@ -63,6 +72,16 @@ struct ShelfRealityArea: View {
                         }
                         .onDisappear {
                             dismissWindow(id: model.videoAreaId)
+                        }
+                    }
+                    if currentStepIndex == 3 {
+                        Button(action: {
+                            openWindow(id: model.completedAreaId)
+                        }) {
+                            Text("Show Completed Product")
+                        }
+                        .onDisappear {
+                            dismissWindow(id: model.completedAreaId)
                         }
                     }
                     Button(action: {

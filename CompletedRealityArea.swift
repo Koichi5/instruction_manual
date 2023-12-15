@@ -1,29 +1,29 @@
 //
-//  EquipmentRealityAre.swift
+//  CompletedRealityArea.swift
 //  InstructionManual
 //
-//  Created by Koichi Kishimoto on 2023/12/03.
+//  Created by Koichi Kishimoto on 2023/12/15.
 //
 
 import SwiftUI
 import RealityKit
 import RealityKitContent
 
-struct EquipmentRealityArea: View {
+struct CompletedRealityArea: View {
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismissWindow) private var dismissWindow
     @ObservedObject private var model = AreaViewModel()
     let attachmentID = "attachmentID"
     var body: some View {
         RealityView { content, attachments in
-            guard let entity = try? await Entity(named: "EquipmentScene", in: realityKitContentBundle) else {
-                fatalError("Unable to load equipment scene model")
+            guard let entity = try? await Entity(named: "CompletedScene", in: realityKitContentBundle)
+            else {
+                fatalError("Unable to load completed scene model")
             }
             guard let env = try? await EnvironmentResource(named: "Directional")
             else { return }
             
-            let iblComponent = ImageBasedLightComponent(source: .single(env),
-                                                        intensityExponent: 10.0)
+            let iblComponent = ImageBasedLightComponent(source: .single(env), intensityExponent: 10.0)
 
             entity.components[ImageBasedLightComponent.self] = iblComponent
             entity.components.set(ImageBasedLightReceiverComponent(imageBasedLight: entity))
@@ -44,18 +44,15 @@ struct EquipmentRealityArea: View {
         } attachments: {
             Attachment(id: attachmentID) {
                 Button(action: {
-                    openWindow(id: model.mainAreaId)
+                    openWindow(id: model.completedAreaId)
                 }) {
                     Text("Close")
                 }
             }
         }
-        .onAppear {
-            dismissWindow(id: model.mainAreaId)
-        }
     }
 }
 
 #Preview {
-    EquipmentRealityArea()
+    CompletedRealityArea()
 }
