@@ -10,7 +10,6 @@ import RealityKit
 import RealityKitContent
 
 struct CompletedRealityArea: View {
-    @Environment(\.openWindow) private var openWindow
     @Environment(\.dismissWindow) private var dismissWindow
     @ObservedObject private var model = AreaViewModel()
     let attachmentID = "attachmentID"
@@ -20,10 +19,11 @@ struct CompletedRealityArea: View {
             else {
                 fatalError("Unable to load completed scene model")
             }
+            
             guard let env = try? await EnvironmentResource(named: "Directional")
             else { return }
             
-            let iblComponent = ImageBasedLightComponent(source: .single(env), intensityExponent: 10.0)
+            let iblComponent = ImageBasedLightComponent(source: .single(env), intensityExponent: 1.0)
 
             entity.components[ImageBasedLightComponent.self] = iblComponent
             entity.components.set(ImageBasedLightReceiverComponent(imageBasedLight: entity))
@@ -44,7 +44,7 @@ struct CompletedRealityArea: View {
         } attachments: {
             Attachment(id: attachmentID) {
                 Button(action: {
-                    openWindow(id: model.completedAreaId)
+                    dismissWindow(id: model.completedAreaId)
                 }) {
                     Text("Close")
                 }

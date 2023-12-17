@@ -2,76 +2,49 @@
 //  ContentView.swift
 //  InstructionManual
 //
-//  Created by Koichi Kishimoto on 2023/12/02.
+//  Created by Koichi Kishimoto on 2023/12/15.
 //
 
 import SwiftUI
-import RealityKit
-import RealityKitContent
 
 struct ContentView: View {
-    @ObservedObject private var model = AreaViewModel()
+    let images = ["ShelfContentArea"]
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismissWindow) private var dismissWindow
+    @ObservedObject private var model = AreaViewModel()
     
     var body: some View {
-        VStack {
-            Button(action: {
-                openWindow(id: model.shelfRealityAreaId)
-            }) {
-                Text("Open Shelf Scene")
+        NavigationSplitView {
+            List {
+                Text("Item List")
             }
-            Button(action: {
-                openWindow(id: model.equipmentRealityAreaId)
-                dismissWindow(id: model.mainAreaId)
-            }) {
-                Text("Open Equipment Scene")
+            .navigationTitle("Hello Wolrd !")
+        } detail: {
+            ScrollView() {
+                LazyVGrid(
+                    columns: Array(repeating: .init(.flexible()), count: 3),
+                    alignment: .center,
+                    spacing: 4
+                ) {
+                    ForEach(images, id: \.self) { imageName in
+                        Color.black
+                            .aspectRatio(1, contentMode: .fill)
+                            .overlay(
+                                Image(imageName)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .onTapGesture {
+                                        openWindow(id: "\(imageName)Id")
+                                    }
+                            )
+                            .clipped()
+                    }
+                }
             }
         }
     }
 }
 
-//struct ContentView: View {
-//
-//    @State private var showImmersiveSpace = false
-//    @State private var immersiveSpaceIsShown = false
-//
-//    @Environment(\.openImmersiveSpace) var openImmersiveSpace
-//    @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
-//
-//    var body: some View {
-//        VStack {
-//            Model3D(named: "Scene", bundle: realityKitContentBundle)
-//                .padding(.bottom, 50)
-//
-//            Text("Hello, world!")
-//
-//            Toggle("Show Immersive Space", isOn: $showImmersiveSpace)
-//                .toggleStyle(.button)
-//                .padding(.top, 50)
-//        }
-//        .padding()
-//        .onChange(of: showImmersiveSpace) { _, newValue in
-//            Task {
-//                if newValue {
-//                    switch await openImmersiveSpace(id: "ImmersiveSpace") {
-//                    case .opened:
-//                        immersiveSpaceIsShown = true
-//                    case .error, .userCancelled:
-//                        fallthrough
-//                    @unknown default:
-//                        immersiveSpaceIsShown = false
-//                        showImmersiveSpace = false
-//                    }
-//                } else if immersiveSpaceIsShown {
-//                    await dismissImmersiveSpace()
-//                    immersiveSpaceIsShown = false
-//                }
-//            }
-//        }
-//    }
-//}
-//
-//#Preview(windowStyle: .automatic) {
+//#Preview {
 //    ContentView()
 //}

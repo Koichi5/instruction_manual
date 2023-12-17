@@ -22,8 +22,7 @@ struct EquipmentRealityArea: View {
             guard let env = try? await EnvironmentResource(named: "Directional")
             else { return }
             
-            let iblComponent = ImageBasedLightComponent(source: .single(env),
-                                                        intensityExponent: 10.0)
+            let iblComponent = ImageBasedLightComponent(source: .single(env), intensityExponent: 10.0)
 
             entity.components[ImageBasedLightComponent.self] = iblComponent
             entity.components.set(ImageBasedLightReceiverComponent(imageBasedLight: entity))
@@ -44,14 +43,14 @@ struct EquipmentRealityArea: View {
         } attachments: {
             Attachment(id: attachmentID) {
                 Button(action: {
-                    openWindow(id: model.mainAreaId)
+                    openWindow(id: model.shelfContentAreaId)
                 }) {
                     Text("Close")
                 }
             }
         }
         .onAppear {
-            dismissWindow(id: model.mainAreaId)
+            dismissWindow(id: model.shelfContentAreaId)
         }
     }
 }

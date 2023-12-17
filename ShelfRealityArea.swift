@@ -33,8 +33,7 @@ struct ShelfRealityArea: View {
             guard let env = try? await EnvironmentResource(named: "Directional")
             else { return }
             
-            let iblComponent = ImageBasedLightComponent(source: .single(env),
-                                                        intensityExponent: 10.0)
+            let iblComponent = ImageBasedLightComponent(source: .single(env), intensityExponent: 10.0)
 
             entity.components[ImageBasedLightComponent.self] = iblComponent
             entity.components.set(ImageBasedLightReceiverComponent(imageBasedLight: entity))
@@ -98,7 +97,7 @@ struct ShelfRealityArea: View {
             }
         }
         .onAppear {
-            dismissWindow(id: model.mainAreaId)
+            dismissWindow(id: model.shelfContentAreaId)
         }
     }
     private func playAnimation(for duration: TimeInterval) {

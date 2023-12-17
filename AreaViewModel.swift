@@ -8,7 +8,8 @@
 import Foundation
 
 class AreaViewModel: ObservableObject {
-    @Published var mainAreaId: String = "Main"
+    @Published var contentAreaId: String = "ContentAreaId"
+    @Published var shelfContentAreaId: String = "ShelfContentAreaId"
     @Published var shelfRealityAreaId: String = "ShelfRealityArea"
     @Published var equipmentRealityAreaId: String = "EquipmentRealityArea"
     @Published var videoAreaId: String = "VideoArea"

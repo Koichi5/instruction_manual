@@ -11,8 +11,12 @@ import SwiftUI
 struct InstructionManualApp: App {
     @ObservedObject private var model = AreaViewModel()
     var body: some Scene {
-        WindowGroup(id: model.mainAreaId) {
+        WindowGroup(id: model.contentAreaId) {
             ContentView()
+        }
+        
+        WindowGroup(id: model.shelfContentAreaId) {
+            ShelfContentView()
         }
         
         WindowGroup(id: model.shelfRealityAreaId) {
