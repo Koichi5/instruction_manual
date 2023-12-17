@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    let images = ["ShelfContentArea"]
+    let images = ["ShelfContentArea", "RobotCleanerContentArea"]
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismissWindow) private var dismissWindow
     @ObservedObject private var model = AreaViewModel()
@@ -34,7 +34,7 @@ struct ContentView: View {
                                     .resizable()
                                     .scaledToFill()
                                     .onTapGesture {
-                                        openWindow(id: "\(imageName)Id")
+                                        openWindow(id: "\(imageName)")
                                     }
                             )
                             .clipped()

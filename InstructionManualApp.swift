@@ -39,8 +39,17 @@ struct InstructionManualApp: App {
         }
         .defaultSize(CGSize(width: 800, height: 900))
         
+        WindowGroup(id: model.robotCleanerContentAreaId) {
+            RobotCleanerContentView()
+        }
+        
+        WindowGroup(id: model.robotCleanerNumId) {
+            RobotCleanerNumRealityArea()
+        }
+        
         ImmersiveSpace(id: model.immersiveAreaId) {
             ImmersiveView()
-        }.immersionStyle(selection: .constant(.full), in: .full)
+        }
+        .immersionStyle(selection: .constant(.full), in: .full)
     }
 }

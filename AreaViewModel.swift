@@ -8,11 +8,13 @@
 import Foundation
 
 class AreaViewModel: ObservableObject {
-    @Published var contentAreaId: String = "ContentAreaId"
-    @Published var shelfContentAreaId: String = "ShelfContentAreaId"
+    @Published var contentAreaId: String = "ContentArea"
+    @Published var shelfContentAreaId: String = "ShelfContentArea"
     @Published var shelfRealityAreaId: String = "ShelfRealityArea"
     @Published var equipmentRealityAreaId: String = "EquipmentRealityArea"
     @Published var videoAreaId: String = "VideoArea"
     @Published var immersiveAreaId: String = "ImmersiveSpace"
     @Published var completedAreaId: String = "CompletedArea"
+    @Published var robotCleanerContentAreaId: String = "RobotCleanerContentArea"
+    @Published var robotCleanerNumId: String = "RobotCleanerNumAreaId"
 }
