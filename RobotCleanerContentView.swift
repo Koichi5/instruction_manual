@@ -74,7 +74,7 @@ struct RobotCleanerContentView: View {
 //            LoopPlayerView(fileName: "RobotCleaner")
             LoopPlayerView {
                 Settings{
-                    FileName("RobotCleaner")
+                    FileName("RobotCleanerHome")
                     Ext("mp4")
                     Gravity(.resizeAspectFill)
                     ErrorGroup{

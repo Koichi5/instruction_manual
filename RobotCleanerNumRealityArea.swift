@@ -10,18 +10,21 @@ import RealityKit
 import RealityKitContent
 
 struct RobotCleanerNumRealityArea: View {
+    @Environment(\.openWindow) private var openWindow
+    @Environment(\.dismissWindow) private var dismissWindow
+    @ObservedObject private var model = AreaViewModel()
     @State var isBehind: Bool = false
     let attachmentID = "attachmentID"
     
     var body: some View {
         RealityView { content, attachments in
-//            guard let entity = try? await Entity(named: "RobotCleanerNumScene", in: realityKitContentBundle) else {
-//                fatalError("Unalbe to load scene model")
-//            }
-            guard let entity = try? await Entity(named: "Scene", in: realityKitContentBundle) else {
+            guard let entity = try? await Entity(named: "RobotCleanerNumScene", in: realityKitContentBundle) else {
                 fatalError("Unalbe to load scene model")
             }
-            guard let env = try? await EnvironmentResource(named: "Directional") else { return }
+            guard let env = try? await EnvironmentResource(named: "Directional") else {
+                print("Unable to load env")
+                return
+            }
             let iblComponent = ImageBasedLightComponent(source: .single(env), intensityExponent: 10.0)
             
             entity.components[ImageBasedLightComponent.self] = iblComponent
@@ -47,7 +50,7 @@ struct RobotCleanerNumRealityArea: View {
 //            }
             
             if let entity = content.entities.first {
-                let newPosition = isBehind ? SIMD3<Float>(-0.17, 0, 0) : SIMD3<Float>(0.17, 0, 0)
+                let newPosition = isBehind ? SIMD3<Float>(-0.15, 0, 0) : SIMD3<Float>(0.15, 0, 0)
                 let newRotation = isBehind ? simd_quatf(angle: .pi, axis: SIMD3<Float>(0, 1, 0)) : simd_quatf(angle: 0, axis: SIMD3<Float>(0, 1, 0))
                 
                 // アニメーションの設定
@@ -55,8 +58,8 @@ struct RobotCleanerNumRealityArea: View {
                 transform.translation = newPosition
                 transform.rotation = newRotation
 
-                // 3秒かけてアニメーション
-                entity.move(to: transform, relativeTo: entity.parent, duration: 3, timingFunction: .easeInOut)
+                // 2秒かけてアニメーション
+                entity.move(to: transform, relativeTo: entity.parent, duration: 2, timingFunction: .easeInOut)
             }
             
             if let attachment = attachments.entity(for: attachmentID) {
@@ -66,8 +69,8 @@ struct RobotCleanerNumRealityArea: View {
                 var transform = Transform.identity
                 transform.translation = newPosition
                 
-                // 3秒かけてアニメーション
-                attachment.move(to: transform, relativeTo: attachment.parent, duration: 3, timingFunction: .easeInOut)
+                // 2秒かけてアニメーション
+                attachment.move(to: transform, relativeTo: attachment.parent, duration: 2, timingFunction: .easeInOut)
             }
             
         } placeholder: {
@@ -77,60 +80,43 @@ struct RobotCleanerNumRealityArea: View {
         } attachments: {
             Attachment(id: attachmentID) {
                 VStack {
-//                    Text("名称一覧")
-//                        .font(.title)
-//                    if isBehind {
-//                        VStack(alignment: .leading, spacing: 20) {
-//                            Text("① クリーナーブラシ")
-//                                .font(.headline)
-//                            Text("② 段差センサー")
-//                                .font(.headline)
-//                            Text("③ 後輪部分")
-//                                .font(.headline)
-//                            Text("④ 吸い込み部分")
-//                                .font(.headline)
-//                            Text("⑤ 前輪部分")
-//                                .font(.headline)
-//                        }
-//                        .frame(height: 300)
-//                    } else {
-//                        VStack(alignment: .leading, spacing: 20) {
-//                            Text("① 電源ボタン")
-//                                .font(.headline)
-//                            Text("② ホームボタン")
-//                                .font(.headline)
-//                            Text("③ バンパー")
-//                                .font(.headline)
-//                        }
-//                        .frame(height: 300)
-//                    }
-//                    Button(action: {
-//                        isBehind.toggle()
-//                    }) {
-//                        isBehind ? Text("表面を見る") : Text("裏面を見る")
-//                    }
-//                    Button(action: {
-//                        openWindow(id: model.robotCleanerContentAreaId)
-//                        dismissWindow(id: model.robotCleanerNumId)
-//                    }) {
-//                        Text("Close")
-//                    }
-                    
-                    Text("飛行機のモデル")
+                    Text("名称一覧")
                         .font(.title)
                     if isBehind {
-                        Text("後側")
-                            .font(.headline)
-                            .padding()
+                        VStack(alignment: .leading, spacing: 20) {
+                            Text("① クリーナーブラシ")
+                                .font(.headline)
+                            Text("② 段差センサー")
+                                .font(.headline)
+                            Text("③ 後輪部分")
+                                .font(.headline)
+                            Text("④ 吸い込み部分")
+                                .font(.headline)
+                            Text("⑤ 前輪部分")
+                                .font(.headline)
+                        }
+                        .frame(height: 300)
                     } else {
-                        Text("前側")
-                            .font(.headline)
-                            .padding()
+                        VStack(alignment: .leading, spacing: 20) {
+                            Text("① 電源ボタン")
+                                .font(.headline)
+                            Text("② ホームボタン")
+                                .font(.headline)
+                            Text("③ バンパー")
+                                .font(.headline)
+                        }
+                        .frame(height: 300)
                     }
                     Button(action: {
                         isBehind.toggle()
                     }) {
-                        isBehind ? Text("前側を見る") : Text("後側を見る")
+                        isBehind ? Text("表面を見る") : Text("裏面を見る")
+                    }
+                    Button(action: {
+                        openWindow(id: model.robotCleanerContentAreaId)
+                        dismissWindow(id: model.robotCleanerNumId)
+                    }) {
+                        Text("Close")
                     }
                 }
             }
