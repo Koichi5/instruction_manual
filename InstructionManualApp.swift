@@ -47,6 +47,10 @@ struct InstructionManualApp: App {
             RobotCleanerNumRealityArea()
         }
         
+        WindowGroup(id: model.robotCleanerMaintenanceId) {
+            RobotCleanerMaintenanceArea()
+        }
+        
         ImmersiveSpace(id: model.immersiveAreaId) {
             ImmersiveView()
         }

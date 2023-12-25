@@ -35,15 +35,15 @@ struct RobotCleanerContentView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
                 Button(action: {
-                    openWindow(id: model.robotCleanerNumId)
+                    openWindow(id: model.robotCleanerMaintenanceId)
                     dismissWindow(id: model.robotCleanerContentAreaId)
                 }) {
                     VStack {
-                        Text("Robot Cleaner Name List")
+                        Text("How to maintenance")
                             .monospaced()
                             .font(.system(size: 40, weight: .bold))
                             .padding()
-                        Text("See robot cleaner name list")
+                        Text("How to maintenance robot cleaner")
                             .monospaced()
                             .font(.system(size: 25, weight: .bold))
                     }
