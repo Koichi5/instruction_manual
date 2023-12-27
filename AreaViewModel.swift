@@ -18,4 +18,5 @@ class AreaViewModel: ObservableObject {
     @Published var robotCleanerContentAreaId: String = "RobotCleanerContentArea"
     @Published var robotCleanerNumId: String = "RobotCleanerNumAreaId"
     @Published var robotCleanerMaintenanceId: String = "RobotCleanerMaintenanceArea"
+    @Published var robotCleanerMaintenanceTermTableAreaId: String = "RobotCleanerMaintenanceTermTableArea"
 }

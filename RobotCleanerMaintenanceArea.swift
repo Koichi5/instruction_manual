@@ -8,19 +8,25 @@
 import SwiftUI
 
 struct RobotCleanerMaintenanceArea: View {
-    @State private var selectedItem: MaintenanceItem?
+    @State private var selectedItem: MaintenanceItem? = MaintenanceItem.term
     var body: some View {
         NavigationSplitView {
-            List(MaintenanceItem.allCases, id: \.self) { mentenanceItem in
+            List(MaintenanceItem.allCases, id: \.self, selection: $selectedItem) { mentenanceItem in
                 Text(mentenanceItem.rawValue)
                     .tag(mentenanceItem)
             }
-            .navigationTitle("Hello World !")
+            .navigationTitle("Maintenance")
         } detail: {
-            if let selectedItem {
-                VStack {
-                    Text(selectedItem.rawValue)
-                }
+            switch selectedItem {
+            case .term:
+                RobotCleanerMaintenanceTermTableArea()
+            case .dustBox:
+                Text("dust box")
+            case .filter:
+                Text("filter")
+            case nil:
+                // TODO: add error view
+                Text("error")
             }
         }
     }

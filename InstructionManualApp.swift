@@ -51,9 +51,13 @@ struct InstructionManualApp: App {
             RobotCleanerMaintenanceArea()
         }
         
-        ImmersiveSpace(id: model.immersiveAreaId) {
-            ImmersiveView()
+        WindowGroup(id: model.robotCleanerMaintenanceTermTableAreaId) {
+            RobotCleanerMaintenanceTermTableArea()
         }
-        .immersionStyle(selection: .constant(.full), in: .full)
+        
+//        ImmersiveSpace(id: model.immersiveAreaId) {
+//            ImmersiveView()
+//        }
+//        .immersionStyle(selection: .constant(.full), in: .full)
     }
 }
