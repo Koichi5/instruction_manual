@@ -15,49 +15,59 @@ struct InstructionManualApp: App {
             ContentView()
         }
         
-        WindowGroup(id: model.shelfContentAreaId) {
-            ShelfContentView()
+        Group {
+            WindowGroup(id: model.shelfContentAreaId) {
+                ShelfContentView()
+            }
+            
+            WindowGroup(id: model.shelfRealityAreaId) {
+                ShelfRealityArea()
+            }
+            .defaultSize(CGSize(width: 800, height: 1000))
+            
+            WindowGroup(id: model.equipmentRealityAreaId) {
+                EquipmentRealityArea()
+            }
+            .defaultSize(CGSize(width: 700, height: 700))
+            
+            WindowGroup(id: model.videoAreaId) {
+                VideoArea(videoSourcePath: "ScrewDetail")
+            }
+            .defaultSize(CGSize(width: 700, height: 700))
+            
+            WindowGroup(id: model.completedAreaId) {
+                CompletedRealityArea()
+            }
+            .defaultSize(CGSize(width: 800, height: 900))
         }
         
-        WindowGroup(id: model.shelfRealityAreaId) {
-            ShelfRealityArea()
-        }
-        .defaultSize(CGSize(width: 800, height: 1000))
-        
-        WindowGroup(id: model.equipmentRealityAreaId) {
-            EquipmentRealityArea()
-        }
-        .defaultSize(CGSize(width: 700, height: 700))
-        
-        WindowGroup(id: model.videoAreaId) {
-            VideoArea(videoSourcePath: "ScrewDetail")
-        }
-        .defaultSize(CGSize(width: 700, height: 700))
-        
-        WindowGroup(id: model.completedAreaId) {
-            CompletedRealityArea()
-        }
-        .defaultSize(CGSize(width: 800, height: 900))
-        
-        WindowGroup(id: model.robotCleanerContentAreaId) {
-            RobotCleanerContentView()
-        }
-        
-        WindowGroup(id: model.robotCleanerNumId) {
-            RobotCleanerNumRealityArea()
+        Group {
+            WindowGroup(id: model.robotCleanerContentAreaId) {
+                RobotCleanerContentView()
+            }
+            
+            WindowGroup(id: model.robotCleanerNumId) {
+                RobotCleanerNumRealityArea()
+            }
+            
+            WindowGroup(id: model.robotCleanerMaintenanceId) {
+                RobotCleanerMaintenanceArea()
+            }
+            
+            WindowGroup(id: model.robotCleanerMaintenanceTermTableAreaId) {
+                RobotCleanerMaintenanceTermTableArea()
+            }
+            
+            WindowGroup(id: model.robotCleanerMaintenanceDustBoxRealityAreaId) {
+                RobotCleanerMaintenanceDustBoxRealityArea()
+            }
+//            .defaultSize(width: 800, height: 900, depth: 1200)
+            .windowResizability(.contentSize)
         }
         
-        WindowGroup(id: model.robotCleanerMaintenanceId) {
-            RobotCleanerMaintenanceArea()
+        ImmersiveSpace(id: model.immersiveAreaId) {
+            ImmersiveView()
         }
-        
-        WindowGroup(id: model.robotCleanerMaintenanceTermTableAreaId) {
-            RobotCleanerMaintenanceTermTableArea()
-        }
-        
-//        ImmersiveSpace(id: model.immersiveAreaId) {
-//            ImmersiveView()
-//        }
-//        .immersionStyle(selection: .constant(.full), in: .full)
+        .immersionStyle(selection: .constant(.full), in: .full)
     }
 }
